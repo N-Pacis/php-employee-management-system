@@ -38,11 +38,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // obtém os valores dos campos do formulário
   // converte o horário de início para o formato "YYYY-MM-DD hh:mm:ss"
-  $data = date("Y-m-d", strtotime($_POST["data"]));
-  $inicio = date("Y-m-d H:i:s", strtotime($_POST["inicio"]));
-  $almoco = date("Y-m-d H:i:s", strtotime($_POST["almoco"]));
-  $fim_almoco = date("Y-m-d H:i:s", strtotime($_POST["fim_almoco"]));
-  $termino = date("Y-m-d H:i:s", strtotime($_POST["termino"]));
+  $data = date("d-m-Y", strtotime($_POST["data"]));
+  $inicio = date("d-m-Y H:i:s", strtotime($_POST["inicio"]));
+  $almoco = date("d-m-Y H:i:s", strtotime($_POST["almoco"]));
+  $fim_almoco = date("d-m-Y H:i:s", strtotime($_POST["fim_almoco"]));
+  $termino = date("d-m-Y H:i:s", strtotime($_POST["termino"]));
   $projeto = $link->real_escape_string($_POST["projeto"]);
   $descricao = $link->real_escape_string($_POST["descricao"]);
   $feriado = $link->real_escape_string($_POST["feriado"]);
