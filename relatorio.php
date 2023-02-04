@@ -51,6 +51,7 @@ Check_login();
 
 
 <?php
+GLOBAL $result_horas_tranalhadas;
 // verifica se o formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['colaborador'])) {
     // conecta ao banco de dados
@@ -61,10 +62,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['colaborador'])) {
     $_SESSION["colaborador"] = $colaborador;
     // cria a consulta SQL para buscar as horas trabalhadas do colaborador selecionado
     $query = "SELECT * FROM horas_trabalhadas WHERE nome_usuario = '$colaborador'";
-    $result = $link->query($query);
+    $result_horas_tranalhadas = $link->query($query);
+
+    $colaboradores = "SELECT * FROM colaboradores WHERE nome= '$colaborador'";
+    $result_colaboradores = $link->query($colaboradores);
+    $row_colaboradores = $result_colaboradores->fetch_assoc();
 }
+
 // verifica se a consulta retornou algum resultado
-if ($result->num_rows > 0) {
+if ($result_horas_tranalhadas != null && $result_horas_tranalhadas->num_rows > 0) {
     // imprime as informações da tabela horas_trabalhadas para o colaborador selecionado
     echo "<div style='display: flex; justify-content: center; padding: 20px;'>";
     echo "<button class='px-4 py-2 font-medium text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800' id='download-btn'>
@@ -74,10 +80,10 @@ if ($result->num_rows > 0) {
     echo "</div>";
     echo "<table class='table-auto w-full border-collapse'>";
     echo "<thead>";
-    echo "<tr> <th class='text-left px-4 py-2 bg-gray-100 text-gray-600 font-medium'>Início</th> <th class='text-left px-4 py-2 bg-gray-100 text-gray-600 font-medium'>Almoço</th> <th class='text-left px-4 py-2 bg-gray-100 text-gray-600 font-medium'>Término</th> <th class='text-left px-4 py-2 bg-gray-100 text-gray-600 font-medium'>Projeto</th> <th class='text-left px-4 py-2 bg-gray-100 text-gray-600 font-medium'>Descrição</th> <th class='text-left px-4 py-2 bg-gray-100 text-gray-600 font-medium'>Horas</th> <th class='text-left px-4 py-2 bg-gray-100 text-gray-600 font-medium'>Minutos</th> <th class='text-left px-4 py-2 bg-gray-100 text-gray-600 font-medium'>Feriado</th> </tr>";
+    echo "<tr> <th class='text-left px-4 py-2 bg-gray-100 text-gray-600 font-medium'>Início</th> <th class='text-left px-4 py-2 bg-gray-100 text-gray-600 font-medium'>Almoço</th> <th class='text-left px-4 py-2 bg-gray-100 text-gray-600 font-medium'>Término</th> <th class='text-left px-4 py-2 bg-gray-100 text-gray-600 font-medium'>Projeto</th> <th class='text-left px-4 py-2 bg-gray-100 text-gray-600 font-medium'>Descrição</th> <th class='text-left px-4 py-2 bg-gray-100 text-gray-600 font-medium'>Horas</th> <th class='text-left px-4 py-2 bg-gray-100 text-gray-600 font-medium'>Minutos</th> <th class='text-left px-4 py-2 bg-gray-100 text-gray-600 font-medium'>Feriado</th><th class='text-left px-4 py-2 bg-gray-100 text-gray-600 font-medium'>Custo Total</th> </tr>";
     echo "</thead>";
     echo "<tbody>";
-    while ($row = $result->fetch_assoc()) {
+    while ($row = $result_horas_tranalhadas->fetch_assoc()) {
         echo "<tr>";
         echo "<td class='text-left px-4 py-2 border-b border-gray-300'>" . $row["inicio"] . "</td>";
         echo "<td class='text-left px-4 py-2 border-b border-gray-300'>" . $row["almoco"] . "</td>";
@@ -87,6 +93,7 @@ if ($result->num_rows > 0) {
         echo "<td class='text-left px-4 py-2 border-b border-gray-300'>" . $row["horas"] . "</td>";
         echo "<td class='text-left px-4 py-2 border-b border-gray-300'>" . $row["minutos"] . "</td>";
         echo "<td class='text-left px-4 py-2 border-b border-gray-300'>" . $row["feriado"] . "</td>";
+        echo "<td class='text-left px-4 py-2 border-b border-gray-300'>" . $row["horas"] * $row_colaboradores["valor"] . "</td>";
         echo "</tr>";
     }
     echo "</table>";
