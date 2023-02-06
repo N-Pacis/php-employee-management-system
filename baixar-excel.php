@@ -34,11 +34,11 @@ $sheet->setCellValue('K1', 'Nome de Usuário');
 // Populate the data
 $row = 2;
 while ($rowData = mysqli_fetch_assoc($result_horas)) {
-  $sheet->setCellValue('A' . $row, $rowData['data']);
-  $sheet->setCellValue('B' . $row, $rowData['inicio']);
-  $sheet->setCellValue('C' . $row, $rowData['almoco']);
-  $sheet->setCellValue('D' . $row, $rowData['fim_almoco']);
-  $sheet->setCellValue('E' . $row, $rowData['termino']);
+  $sheet->setCellValue('A' . $row, date("d/m/Y H:i", strtotime($rowData['data'])));
+  $sheet->setCellValue('B' . $row, date("d/m/Y H:i", strtotime($rowData['inicio'])));
+  $sheet->setCellValue('C' . $row, date("d/m/Y H:i", strtotime($rowData['almoco'])));
+  $sheet->setCellValue('D' . $row, date("d/m/Y H:i", strtotime($rowData['fim_almoco'])));
+  $sheet->setCellValue('E' . $row, date("d/m/Y H:i", strtotime($rowData['termino'])));
   $sheet->setCellValue('F' . $row, $rowData['projeto']);
   $sheet->setCellValue('H' . $row, $rowData['descricao']);
   $sheet->setCellValue('G' . $row, $rowData['horas']);

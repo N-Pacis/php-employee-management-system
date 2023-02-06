@@ -85,9 +85,9 @@ if ($result_horas_tranalhadas != null && $result_horas_tranalhadas->num_rows > 0
     echo "<tbody>";
     while ($row = $result_horas_tranalhadas->fetch_assoc()) {
         echo "<tr>";
-        echo "<td class='text-left px-4 py-2 border-b border-gray-300'>" . $row["inicio"] . "</td>";
-        echo "<td class='text-left px-4 py-2 border-b border-gray-300'>" . $row["almoco"] . "</td>";
-        echo "<td class='text-left px-4 py-2 border-b border-gray-300'>" . $row["termino"] . "</td>";
+        echo "<td class='text-left px-4 py-2 border-b border-gray-300'>" . date("d/m/Y H:i", strtotime($row['inicio'])) . "</td>";
+        echo "<td class='text-left px-4 py-2 border-b border-gray-300'>" . date("d/m/Y H:i", strtotime($row["almoco"])) . "</td>";
+        echo "<td class='text-left px-4 py-2 border-b border-gray-300'>" . date("d/m/Y H:i", strtotime($row["termino"])) . "</td>";
         echo "<td class='text-left px-4 py-2 border-b border-gray-300'>" . $row["projeto"] . "</td>";
         echo "<td class='text-left px-4 py-2 border-b border-gray-300'>" . $row["descricao"] . "</td>";
         echo "<td class='text-left px-4 py-2 border-b border-gray-300'>" . $row["horas"] . "</td>";
